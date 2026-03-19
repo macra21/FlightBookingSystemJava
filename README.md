@@ -6,11 +6,6 @@ This repository contains the **Java** implementation of the "Flight Booking Syst
 
 To maintain a clean version history and clearly highlight the project's evolution, the assignments are organized using **different branches** for each development stage. Ultimately, the final and fully functional solutions are merged into the `main` branch.
 
-The project stages can be tracked as follows:
-* `main` - Contains the stable, up-to-date version of the project.
-* `assignment-week-3` - Branch dedicated to the domain model classes and repository interfaces.
-* `assignment-week-4` - Branch dedicated to the database repository implementation and logging system.
-
 ## Technologies Used
 * **Language:** Java
 * **Build Tool:** Gradle
