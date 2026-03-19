@@ -1,0 +1,66 @@
+19 Mar 2026 15:02:27,805 [main] com.org.FlightBookingSystem.Main 9 main - Starting application.
+19 Mar 2026 15:04:05,967 [main] com.org.FlightBookingSystem.Main 13 main - Starting application.
+19 Mar 2026 15:05:12,262 [main] com.org.FlightBookingSystem.Main 13 main - Starting application.
+19 Mar 2026 15:19:56,866 [main] com.org.FlightBookingSystem.Main 13 main - Starting application.
+19 Mar 2026 15:19:56,873 [main] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 31 save - Enter Saving employee: Employee{id=null, username='Gigel', password='ParolaSecreta'}
+19 Mar 2026 15:19:57,327 [main] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 53 save - Catching java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'Gigel' for key 'employees.username'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1054) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1003) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1312) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:988) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository.save(EmployeeJdbcRepository.java:39) [main/:?]
+	at com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository.save(EmployeeJdbcRepository.java:19) [main/:?]
+	at com.org.FlightBookingSystem.Main.main(Main.java:17) [main/:?]
+
+19 Mar 2026 15:19:57,335 [main] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 55 save - Throwing com.org.FlightBookingSystem.exceptions.RepositoryException: Failed to save employee: Duplicate entry 'Gigel' for key 'employees.username'
+	at com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository.save(EmployeeJdbcRepository.java:54) [main/:?]
+	at com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository.save(EmployeeJdbcRepository.java:19) [main/:?]
+	at com.org.FlightBookingSystem.Main.main(Main.java:17) [main/:?]
+Caused by: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'Gigel' for key 'employees.username'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1054) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1003) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1312) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:988) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository.save(EmployeeJdbcRepository.java:39) ~[main/:?]
+	... 2 more
+
+19 Mar 2026 15:20:11,131 [main] com.org.FlightBookingSystem.Main 13 main - Starting application.
+19 Mar 2026 15:20:11,137 [main] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 31 save - Enter Saving employee: Employee{id=null, username='Giani', password='ParolaSecreta'}
+19 Mar 2026 15:20:11,505 [main] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 43 save - Exit with(Saved employee: Employee{id=3, username='Giani', password='ParolaSecreta'})
+19 Mar 2026 15:20:11,505 [main] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 75 findOne - Enter Finding employee with id= 3
+19 Mar 2026 15:20:11,506 [main] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 108 findOne - Exit with(Employee with id= 3 found.)
+19 Mar 2026 15:53:18,740 [main] com.org.FlightBookingSystem.Main 13 main - Starting application.
+19 Mar 2026 15:53:18,747 [main] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 31 save - Enter Saving employee: Employee{id=null, username='Giani', password='ParolaSecreta'}
+19 Mar 2026 15:53:19,154 [main] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 53 save - Catching java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'Giani' for key 'employees.username'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1054) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1003) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1312) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:988) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository.save(EmployeeJdbcRepository.java:39) [main/:?]
+	at com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository.save(EmployeeJdbcRepository.java:19) [main/:?]
+	at com.org.FlightBookingSystem.Main.main(Main.java:17) [main/:?]
+
+19 Mar 2026 15:53:19,161 [main] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 55 save - Throwing com.org.FlightBookingSystem.exceptions.RepositoryException: Failed to save employee: Duplicate entry 'Giani' for key 'employees.username'
+	at com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository.save(EmployeeJdbcRepository.java:54) [main/:?]
+	at com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository.save(EmployeeJdbcRepository.java:19) [main/:?]
+	at com.org.FlightBookingSystem.Main.main(Main.java:17) [main/:?]
+Caused by: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'Giani' for key 'employees.username'
+	at com.mysql.cj.jdbc.exceptions.SQLError.createSQLException(SQLError.java:118) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.exceptions.SQLExceptionsMapping.translateException(SQLExceptionsMapping.java:122) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeInternal(ClientPreparedStatement.java:912) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1054) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdateInternal(ClientPreparedStatement.java:1003) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeLargeUpdate(ClientPreparedStatement.java:1312) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.mysql.cj.jdbc.ClientPreparedStatement.executeUpdate(ClientPreparedStatement.java:988) ~[mysql-connector-j-8.3.0.jar:8.3.0]
+	at com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository.save(EmployeeJdbcRepository.java:39) ~[main/:?]
+	... 2 more
+

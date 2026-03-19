@@ -4,6 +4,8 @@ import com.org.FlightBookingSystem.domain.Flight;
 import com.org.FlightBookingSystem.exceptions.RepositoryException;
 import com.org.FlightBookingSystem.repository.IFlightRepository;
 import com.org.FlightBookingSystem.utils.db.DBConnectionManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -16,6 +18,9 @@ import java.util.List;
  * for the {@link Flight} entity.
  */
 public class FlightJdbcRepository implements IFlightRepository {
+
+    private static final Logger logger = LogManager.getLogger(FlightJdbcRepository.class);
+
     /**
      * Saves a new {@link Flight} to the database and assigns it an auto generated id.
      *
@@ -24,6 +29,7 @@ public class FlightJdbcRepository implements IFlightRepository {
      */
     @Override
     public void save(Flight entity) {
+        logger.traceEntry("Saving flight: " + entity.toString());
         Connection connection = null;
         try{
             connection = DBConnectionManager.getConnection();
@@ -38,20 +44,24 @@ public class FlightJdbcRepository implements IFlightRepository {
                 try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         entity.setId(generatedKeys.getInt(1));
+                        logger.traceExit("Saved flight: " + entity.toString());
                     } else {
-                        System.err.println("Saving flight failed, no ID obtained.");
-                        throw new RepositoryException("Saving flight failed, no ID obtained.");
+                        RepositoryException re = new RepositoryException("Saving flight failed, no ID obtained.");
+                        logger.throwing(re);
+                        throw re;
                     }
                 }
             }
         } catch (SQLException e){
-            System.err.println("Failed to save flight: " + e.getMessage());
-            throw new RepositoryException("Failed to save flight: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to save flight: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
     }
@@ -65,6 +75,7 @@ public class FlightJdbcRepository implements IFlightRepository {
      */
     @Override
     public Flight findOne(Integer id) {
+        logger.traceEntry("Finding flight with id=" + id);
         Connection connection = null;
         Flight flight = null;
         try{
@@ -79,14 +90,21 @@ public class FlightJdbcRepository implements IFlightRepository {
                 }
             }
         } catch (SQLException e){
-            System.err.println("Failed to find Flight: " + e.getMessage());
-            throw new RepositoryException("Failed to find Flight: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to find Flight: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
+        }
+        if (flight == null) {
+            logger.traceExit("Flight with id=" + id + " NOT found.");
+        } else {
+            logger.traceExit("Flight with id=" + id + " found.");
         }
         return flight;
     }
@@ -103,6 +121,7 @@ public class FlightJdbcRepository implements IFlightRepository {
      */
     @Override
     public Iterable<Flight> findAll() {
+        logger.traceEntry("Finding all flights.");
         Connection connection = null;
         List<Flight> flights = new ArrayList<>();
         try{
@@ -115,15 +134,18 @@ public class FlightJdbcRepository implements IFlightRepository {
                 }
             }
         } catch (SQLException e){
-            System.err.println("Failed to find all flights: " + e.getMessage());
-            throw new RepositoryException("Failed to find all flights: " + e.getMessage(), e);
-        }  finally {
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to find all flights: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
+        } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
+        logger.traceExit("Returned found flights.");
         return flights;
     }
 
@@ -135,6 +157,7 @@ public class FlightJdbcRepository implements IFlightRepository {
      */
     @Override
     public void update(Flight entity) {
+        logger.traceEntry("Updating flight: " + entity.toString());
         Connection connection = null;
         try{
             connection = DBConnectionManager.getConnection();
@@ -154,18 +177,22 @@ public class FlightJdbcRepository implements IFlightRepository {
                 preparedStatement.setInt(6, entity.getId());
                 int affectedRows = preparedStatement.executeUpdate();
                 if (affectedRows == 0) {
-                    System.err.println("Failed to update flight, no rows affected.");
-                    throw new RepositoryException("Failed to update flight, no rows affected.");
+                    RepositoryException re = new RepositoryException("Failed to update flight, no rows affected.");
+                    logger.throwing(re);
+                    throw re;
                 }
+                logger.traceExit("Updated flight: " + entity.toString());
             }
         } catch (SQLException e){
-            System.err.println("Failed to update flight: " + e.getMessage());
-            throw new RepositoryException("Failed to update flight: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re =  new RepositoryException("Failed to update flight: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
     }
@@ -178,6 +205,7 @@ public class FlightJdbcRepository implements IFlightRepository {
      */
     @Override
     public void delete(Integer id) {
+        logger.traceEntry("Deleting flight with id=" + id);
         Connection connection = null;
         try{
             connection = DBConnectionManager.getConnection();
@@ -186,18 +214,22 @@ public class FlightJdbcRepository implements IFlightRepository {
                 preparedStatement.setInt(1, id);
                 int affectedRows = preparedStatement.executeUpdate();
                 if (affectedRows == 0) {
-                    System.err.println("Failed to delete flight, no rows affected.");
-                    throw new RepositoryException("Failed to delete flight, no rows affected.");
+                    RepositoryException re = new RepositoryException("Failed to delete flight, no rows affected.");
+                    logger.throwing(re);
+                    throw re;
                 }
+                logger.traceExit("Deleted flight: " + id);
             }
         } catch (SQLException e){
-            System.err.println("Failed to delete flight: " + e.getMessage());
-            throw new RepositoryException("Failed to delete flight: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to delete flight: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
     }
@@ -211,6 +243,7 @@ public class FlightJdbcRepository implements IFlightRepository {
      */
     @Override
     public Iterable<Flight> findByDestinationAndDepartureDate(String destination, LocalDateTime date) {
+        logger.traceEntry("Finding flights by destination and departure date.");
         Connection connection = null;
         List<Flight> flights = new ArrayList<>();
         try {
@@ -227,15 +260,18 @@ public class FlightJdbcRepository implements IFlightRepository {
                 }
             }
         } catch (SQLException e) {
-            System.err.println("Failed to find Flight: " + e.getMessage());
-            throw new RepositoryException("Failed to find Flight: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to find Flight: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try {
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e) {
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
+        logger.traceExit("Returned found flights.");
         return flights;
     }
 

@@ -4,6 +4,8 @@ import com.org.FlightBookingSystem.domain.Employee;
 import com.org.FlightBookingSystem.exceptions.RepositoryException;
 import com.org.FlightBookingSystem.repository.IEmployeeRepository;
 import com.org.FlightBookingSystem.utils.db.DBConnectionManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -15,6 +17,9 @@ import java.util.List;
  * for the {@link Employee} entity.
  */
 public class EmployeeJdbcRepository implements IEmployeeRepository {
+
+    private static final Logger logger = LogManager.getLogger(EmployeeJdbcRepository.class);
+
     /**
      * Saves a new {@link Employee} to the database and assigns it an auto generated id.
      *
@@ -23,6 +28,7 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
      */
     @Override
     public void save(Employee entity) {
+        logger.traceEntry("Saving employee: " + entity.toString());
         Connection connection = null;
         try {
             connection = DBConnectionManager.getConnection();
@@ -34,20 +40,24 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
                 try (ResultSet resultSet = preparedStatement.getGeneratedKeys()) {
                     if (resultSet.next()) {
                         entity.setId(resultSet.getInt(1));
+                        logger.traceExit("Saved employee: " + entity.toString());
                     } else {
-                        System.err.println("Saving employee failed, no ID obtained.");
-                        throw new RepositoryException("Saving employee failed, no ID obtained.");
+                        RepositoryException re = new RepositoryException("Saving employee failed, no ID obtained.");
+                        logger.throwing(re);
+                        throw re;
                     }
                 }
             }
         } catch (SQLException e){
-            System.err.println("Failed to save employee: " + e.getMessage());
-            throw new RepositoryException("Failed to save employee: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re =  new RepositoryException("Failed to save employee: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
     }
@@ -61,6 +71,7 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
      */
     @Override
     public Employee findOne(Integer id) {
+        logger.traceEntry("Finding employee with id= " + id);
         Connection connection = null;
         Employee employee = null;
         try{
@@ -79,14 +90,21 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
                 }
             }
         } catch (SQLException e){
-            System.err.println("Failed to find employee: " + e.getMessage());
-            throw new RepositoryException("Failed to find employee: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re =  new RepositoryException("Failed to find employee: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
+        }
+        if (employee == null){
+            logger.traceExit("Employee with id=" + id + " NOT found.");
+        } else{
+            logger.traceExit("Employee with id= " + id + " found.");
         }
         return employee;
     }
@@ -103,6 +121,7 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
      */
     @Override
     public Iterable<Employee> findAll() {
+        logger.traceEntry("Finding all employees.");
         Connection connection = null;
         List<Employee> employeeList = new ArrayList<>();
         try{
@@ -119,15 +138,18 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
                 }
             }
         } catch (SQLException e){
-            System.err.println("Failed to find all employees: " + e.getMessage());
-            throw new RepositoryException("Failed to find all employees: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to find all employees: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
+        logger.traceExit("Returned found employees.");
         return employeeList;
     }
 
@@ -139,6 +161,7 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
      */
     @Override
     public void update(Employee entity) {
+        logger.traceEntry("Updating employee: " + entity.toString());
         Connection connection = null;
         try{
             connection = DBConnectionManager.getConnection();
@@ -151,18 +174,22 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
                 preparedStatement.setInt(3, entity.getId());
                 int affectedRows = preparedStatement.executeUpdate();
                 if (affectedRows == 0){
-                    System.err.println("Failed to update employee, no rows affected.");
-                    throw new RepositoryException("Failed to update employee, no rows affected.");
+                    RepositoryException re = new RepositoryException("Failed to update employee, no rows affected.");
+                    logger.throwing(re);
+                    throw re;
                 }
+                logger.traceExit("Updated employee: " + entity.toString());
             }
         } catch (SQLException e){
-            System.err.println("Failed to update employee: " + e.getMessage());
-            throw new RepositoryException("Failed to update employee: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to update employee: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
     }
@@ -175,6 +202,7 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
      */
     @Override
     public void delete(Integer id) {
+        logger.traceEntry("Deleting employee with id= " + id);
         Connection connection = null;
         try{
             connection = DBConnectionManager.getConnection();
@@ -183,18 +211,22 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
                 preparedStatement.setInt(1, id);
                 int affectedRows = preparedStatement.executeUpdate();
                 if (affectedRows == 0){
-                    System.err.println("Deleting employee failed, no rows affected.");
-                    throw new RepositoryException("Deleting employee failed, no rows affected.");
+                    RepositoryException re = new RepositoryException("Deleting employee failed, no rows affected.");
+                    logger.throwing(re);
+                    throw re;
                 }
+                logger.traceExit("Deleted employee: " + id);
             }
         } catch (SQLException e){
-            System.err.println("Failed to delete employee: " + e.getMessage());
-            throw new RepositoryException("Failed to delete employee: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to delete employee: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         }  finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
     }
@@ -211,6 +243,7 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
      */
     @Override
     public Employee findByUsernameAndPassword(String username, String password) {
+        logger.traceEntry("Finding the employee with username= " + username);
         Connection connection = null;
         Employee employee = null;
         try{
@@ -230,14 +263,21 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
                 }
             }
         } catch (SQLException e){
-            System.err.println("Failed to find employee: " + e.getMessage());
-            throw new RepositoryException("Failed to find employee: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to find employee: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         }  finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
+        }
+        if (employee == null){
+            logger.traceExit("Employee with username= " + username + " NOT found");
+        } else{
+            logger.traceExit("Employee with username= " + username + " found.");
         }
         return employee;
     }
