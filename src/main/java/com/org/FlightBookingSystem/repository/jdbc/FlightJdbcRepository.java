@@ -1,6 +1,5 @@
 package com.org.FlightBookingSystem.repository.jdbc;
 
-import com.org.FlightBookingSystem.domain.Employee;
 import com.org.FlightBookingSystem.domain.Flight;
 import com.org.FlightBookingSystem.exceptions.RepositoryException;
 import com.org.FlightBookingSystem.repository.IFlightRepository;
@@ -75,14 +74,7 @@ public class FlightJdbcRepository implements IFlightRepository {
                 preparedStatement.setInt(1, id);
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     if (resultSet.next()) {
-                        flight = new Flight(
-                                resultSet.getInt("id"),
-                                resultSet.getString("departure_airport"),
-                                resultSet.getString("arrival_airport"),
-                                resultSet.getObject("departure_time", LocalDateTime.class),
-                                resultSet.getObject("arrival_time", LocalDateTime.class),
-                                resultSet.getInt("available_seats")
-                        );
+                        flight = parseFromResultSet(resultSet);
                     }
                 }
             }
@@ -119,14 +111,7 @@ public class FlightJdbcRepository implements IFlightRepository {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql);
                  ResultSet resultSet = preparedStatement.executeQuery()){
                 while (resultSet.next()) {
-                    flights.add(new Flight(
-                            resultSet.getInt("id"),
-                            resultSet.getString("departure_airport"),
-                            resultSet.getString("arrival_airport"),
-                            resultSet.getObject("departure_time", LocalDateTime.class),
-                            resultSet.getObject("arrival_time", LocalDateTime.class),
-                            resultSet.getInt("available_seats")
-                    ));
+                    flights.add(parseFromResultSet(resultSet));
                 }
             }
         } catch (SQLException e){
@@ -212,7 +197,7 @@ public class FlightJdbcRepository implements IFlightRepository {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to delete flight: " + e.getMessage());
+                System.err.println("Failed to release connection: " + e.getMessage());
             }
         }
     }
@@ -237,14 +222,7 @@ public class FlightJdbcRepository implements IFlightRepository {
                 preparedStatement.setObject(2, date);
                 try (ResultSet resultSet = preparedStatement.executeQuery()) {
                     while (resultSet.next()) {
-                        flights.add(new Flight(
-                                resultSet.getInt("id"),
-                                resultSet.getString("departure_airport"),
-                                resultSet.getString("arrival_airport"),
-                                resultSet.getObject("departure_time", LocalDateTime.class),
-                                resultSet.getObject("arrival_time", LocalDateTime.class),
-                                resultSet.getInt("available_seats")
-                        ));
+                        flights.add(parseFromResultSet(resultSet));
                     }
                 }
             }
@@ -259,5 +237,23 @@ public class FlightJdbcRepository implements IFlightRepository {
             }
         }
         return flights;
+    }
+
+    /**
+     * Helper method that maps a single row from the {@link ResultSet} into a {@link Flight} object.
+     *
+     * @param resultSet the ResultSet pointing to the current row
+     * @return the new {@link Flight}
+     * @throws SQLException if a database error occurs.
+     */
+    private Flight parseFromResultSet(ResultSet resultSet) throws SQLException {
+        return new Flight(
+                resultSet.getInt("id"),
+                resultSet.getString("departure_airport"),
+                resultSet.getString("arrival_airport"),
+                resultSet.getObject("departure_time", LocalDateTime.class),
+                resultSet.getObject("arrival_time", LocalDateTime.class),
+                resultSet.getInt("available_seats")
+        );
     }
 }
