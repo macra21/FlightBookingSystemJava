@@ -120,4 +120,14 @@ public class Booking implements IEntity<Integer> {
     public void setTouristNames(List<String> touristNames) {
         this.touristNames = touristNames;
     }
+
+    @Override
+    public String toString() {
+        return "Booking{" +
+                "id=" + id +
+                ", flight=" + flight +
+                ", numberOfSeats=" + numberOfSeats +
+                ", touristNames=" + touristNames +
+                '}';
+    }
 }

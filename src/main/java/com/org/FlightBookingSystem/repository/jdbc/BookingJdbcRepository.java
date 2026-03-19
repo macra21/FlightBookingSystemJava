@@ -5,6 +5,8 @@ import com.org.FlightBookingSystem.domain.Flight;
 import com.org.FlightBookingSystem.exceptions.RepositoryException;
 import com.org.FlightBookingSystem.repository.IBookingRepository;
 import com.org.FlightBookingSystem.utils.db.DBConnectionManager;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.time.LocalDateTime;
@@ -18,6 +20,9 @@ import java.util.List;
  * for the {@link Booking} entity.
  */
 public class BookingJdbcRepository implements IBookingRepository {
+
+    private static final Logger logger = LogManager.getLogger(BookingJdbcRepository.class);
+
     /**
      * Saves a new {@link Booking} to the database and assigns it an auto generated id.
      *
@@ -27,6 +32,7 @@ public class BookingJdbcRepository implements IBookingRepository {
     @Override
     public void save(Booking entity) {
         Connection connection = null;
+        logger.traceEntry("Saving booking: " + entity.toString());
         try{
             connection = DBConnectionManager.getConnection();
             String sql = "INSERT INTO bookings (flight_id, number_of_seats, tourist_names) VALUES (?, ?, ?)";
@@ -39,20 +45,24 @@ public class BookingJdbcRepository implements IBookingRepository {
                 try (ResultSet generatedKeys = preparedStatement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         entity.setId(generatedKeys.getInt(1));
+                        logger.traceExit("Saved booking: " +  entity.toString());
                     } else {
-                        System.err.println("Saving booking failed, no ID obtained.");
-                        throw new RepositoryException("Saving booking failed, no ID obtained.");
+                        RepositoryException re = new RepositoryException("Saving booking failed, no ID obtained.");
+                        logger.throwing(re);
+                        throw re;
                     }
                 }
             }
         } catch (SQLException e){
-            System.err.println("Failed to save booking: " + e.getMessage());
-            throw new RepositoryException("Failed to save booking: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to save booking: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             }  catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
     }
@@ -66,6 +76,7 @@ public class BookingJdbcRepository implements IBookingRepository {
      */
     @Override
     public Booking findOne(Integer id) {
+        logger.traceEntry("Finding booking with id=" + id);
         Connection connection = null;
         Booking booking = null;
         try{
@@ -83,14 +94,21 @@ public class BookingJdbcRepository implements IBookingRepository {
                 }
             }
         } catch (SQLException e){
-            System.err.println("Failed to find booking: " + e.getMessage());
-            throw new RepositoryException("Failed to find booking: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to find booking: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             }  catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
+        }
+        if (booking == null) {
+            logger.traceExit("Booking with id=" + id + " NOT found.");
+        } else {
+            logger.traceExit("Booking with id=" + id + " found.");
         }
         return booking;
     }
@@ -107,6 +125,7 @@ public class BookingJdbcRepository implements IBookingRepository {
      */
     @Override
     public Iterable<Booking> findAll() {
+        logger.traceEntry("Finding all bookings.");
         Connection connection = null;
         List<Booking> bookings = new ArrayList<>();
         try {
@@ -121,15 +140,18 @@ public class BookingJdbcRepository implements IBookingRepository {
                 }
             }
         } catch (SQLException e){
-            System.err.println("Failed to find all bookings: " + e.getMessage());
-            throw new RepositoryException("Failed to find all bookings: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to find all bookings: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             }  catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
+        logger.traceExit("Returned found bookings.");
         return bookings;
     }
 
@@ -141,6 +163,7 @@ public class BookingJdbcRepository implements IBookingRepository {
      */
     @Override
     public void update(Booking entity) {
+        logger.traceEntry("Updating booking: " + entity.toString());
         Connection connection = null;
         try{
             connection = DBConnectionManager.getConnection();
@@ -157,30 +180,35 @@ public class BookingJdbcRepository implements IBookingRepository {
                 preparedStatement.setInt(4, entity.getId());
                 int affectedRows = preparedStatement.executeUpdate();
                 if (affectedRows == 0) {
-                    System.err.println("Failed to update booking, no rows affected.");
-                    throw new RepositoryException("Failed to update booking, no rows affected.");
+                    RepositoryException re = new RepositoryException("Failed to update booking, no rows affected.");
+                    logger.throwing(re);
+                    throw re;
                 }
+                logger.traceExit("Updated booking: " + entity.toString());
             }
         } catch (SQLException e){
-            System.err.println("Failed to update booking: " + e.getMessage());
-            throw new RepositoryException("Failed to update booking: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re =  new RepositoryException("Failed to update booking: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             }  catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
     }
 
     /**
-     * Deletes an {@link Flight} based on its id.
+     * Deletes an {@link Booking} based on its id.
      *
      * @param id the ID of the entity to remove
      * @throws RepositoryException if a database error occurs.
      */
     @Override
     public void delete(Integer id) {
+        logger.traceEntry("Deleting booking with id=" + id);
         Connection connection = null;
         try{
             connection = DBConnectionManager.getConnection();
@@ -189,18 +217,22 @@ public class BookingJdbcRepository implements IBookingRepository {
                 preparedStatement.setInt(1, id);
                 int affectedRows = preparedStatement.executeUpdate();
                 if (affectedRows == 0) {
-                    System.err.println("Failed to delete booking, no rows affected.");
-                    throw new RepositoryException("Failed to delete booking, no rows affected.");
+                    RepositoryException re = new RepositoryException("Failed to delete booking, no rows affected.");
+                    logger.throwing(re);
+                    throw re;
                 }
+                logger.traceExit("Deleted booking: " + id);
             }
         } catch (SQLException e){
-            System.err.println("Failed to delete booking: " + e.getMessage());
-            throw new RepositoryException("Failed to delete booking: " + e.getMessage(), e);
+            logger.catching(e);
+            RepositoryException re = new RepositoryException("Failed to delete booking: " + e.getMessage(), e);
+            logger.throwing(re);
+            throw re;
         } finally {
             try{
                 DBConnectionManager.releaseConnection(connection);
             } catch (SQLException e){
-                System.err.println("Failed to release connection: " + e.getMessage());
+                logger.catching(e);
             }
         }
     }
