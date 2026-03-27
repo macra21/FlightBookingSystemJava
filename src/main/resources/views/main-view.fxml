@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.org.FlightBookingSystem.controller.MainController">
+    <top>
+        <HBox spacing="20" alignment="CENTER_LEFT" style="-fx-padding: 10;">
+            <Label fx:id="welcomeLabel" style="-fx-font-size: 16px; -fx-font-weight: bold;" />
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="Logout" onAction="#handleLogout" />
+        </HBox>
+    </top>
+    <center>
+        <TabPane tabClosingPolicy="UNAVAILABLE">
+            <tabs>
+                <Tab text="Dashboard &amp; Booking">
+                    <SplitPane dividerPositions="0.5" orientation="VERTICAL">
+                        <VBox spacing="5" style="-fx-padding: 10;">
+                            <Label text="All Available Flights" style="-fx-font-weight: bold;"/>
+                            <TableView fx:id="flightsTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn text="Destination" prefWidth="150"><cellValueFactory><PropertyValueFactory property="arrivalAirport"/></cellValueFactory></TableColumn>
+                                    <TableColumn text="Dep. Date &amp; Time" prefWidth="150"><cellValueFactory><PropertyValueFactory property="departureTime"/></cellValueFactory></TableColumn>
+                                    <TableColumn text="Airport" prefWidth="150"><cellValueFactory><PropertyValueFactory property="departureAirport"/></cellValueFactory></TableColumn>
+                                    <TableColumn text="Ready Seats" prefWidth="100"><cellValueFactory><PropertyValueFactory property="availableSeats"/></cellValueFactory></TableColumn>
+                                </columns>
+                            </TableView>
+                        </VBox>
+
+                        <VBox spacing="5" style="-fx-padding: 10;">
+                            <Label text="Search Flights" style="-fx-font-weight: bold;"/>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <TextField fx:id="searchDestinationField" promptText="Destination..." />
+                                <DatePicker fx:id="searchDatePicker" promptText="Departure Date" />
+                                <Button text="Search" onAction="#handleSearch" />
+                                <Button text="Clear" onAction="#handleClearSearch" />
+                            </HBox>
+                            <TableView fx:id="searchTable" VBox.vgrow="ALWAYS">
+                                <columns>
+                                    <TableColumn text="Destination" prefWidth="150"><cellValueFactory><PropertyValueFactory property="arrivalAirport"/></cellValueFactory></TableColumn>
+                                    <TableColumn text="Dep. Time" prefWidth="150"><cellValueFactory><PropertyValueFactory property="departureTime"/></cellValueFactory></TableColumn>
+                                    <TableColumn text="Available Seats" prefWidth="100"><cellValueFactory><PropertyValueFactory property="availableSeats"/></cellValueFactory></TableColumn>
+                                </columns>
+                            </TableView>
+                            <HBox style="-fx-padding: 10 0 0 0;" spacing="10" alignment="CENTER_LEFT">
+                                <Button text="Book Selected Flight" onAction="#handleBookFlight"/>
+                            </HBox>
+                        </VBox>
+                    </SplitPane>
+                </Tab>
+
+                <Tab text="Manage Bookings">
+                    <VBox spacing="10" style="-fx-padding: 10;">
+                        <Label text="All Bookings" style="-fx-font-weight: bold;"/>
+                        <TableView fx:id="bookingsTable" VBox.vgrow="ALWAYS">
+                            <columns>
+                                <TableColumn text="Flight" prefWidth="200"><cellValueFactory><PropertyValueFactory property="flight"/></cellValueFactory></TableColumn>
+                                <TableColumn text="No. Seats" prefWidth="70"><cellValueFactory><PropertyValueFactory property="numberOfSeats"/></cellValueFactory></TableColumn>
+                                <TableColumn text="Tourists" prefWidth="300"><cellValueFactory><PropertyValueFactory property="touristNames"/></cellValueFactory></TableColumn>
+                            </columns>
+                        </TableView>
+                        <HBox spacing="10" alignment="CENTER_LEFT">
+                            <Button text="Modify Tourist Names" onAction="#handleModifyBooking" />
+                        </HBox>
+                    </VBox>
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+</BorderPane>

@@ -64,3 +64,59 @@ Caused by: java.sql.SQLIntegrityConstraintViolationException: Duplicate entry 'G
 	at com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository.save(EmployeeJdbcRepository.java:39) ~[main/:?]
 	... 2 more
 
+27 Mar 2026 11:28:52,880 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 245 findByUsername - Enter Finding the employee with username= 123
+27 Mar 2026 11:28:53,523 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 276 findByUsername - Exit with(Employee with username= 123 NOT found)
+27 Mar 2026 11:28:53,577 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 245 findByUsername - Enter Finding the employee with username= 123
+27 Mar 2026 11:28:53,580 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 276 findByUsername - Exit with(Employee with username= 123 NOT found)
+27 Mar 2026 11:28:53,757 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 245 findByUsername - Enter Finding the employee with username= 123
+27 Mar 2026 11:28:53,759 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 276 findByUsername - Exit with(Employee with username= 123 NOT found)
+27 Mar 2026 11:28:53,912 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 245 findByUsername - Enter Finding the employee with username= 123
+27 Mar 2026 11:28:53,913 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 276 findByUsername - Exit with(Employee with username= 123 NOT found)
+27 Mar 2026 11:29:53,702 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 245 findByUsername - Enter Finding the employee with username= Gigel
+27 Mar 2026 11:29:54,092 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 278 findByUsername - Exit with(Employee with username= Gigel found.)
+27 Mar 2026 11:32:13,888 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 245 findByUsername - Enter Finding the employee with username= Gigel
+27 Mar 2026 11:32:14,260 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 278 findByUsername - Exit with(Employee with username= Gigel found.)
+27 Mar 2026 11:41:16,354 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 245 findByUsername - Enter Finding the employee with username= Gigel
+27 Mar 2026 11:41:16,802 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 278 findByUsername - Exit with(Employee with username= Gigel found.)
+27 Mar 2026 11:41:16,880 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 124 findAll - Enter Finding all flights.
+27 Mar 2026 11:41:16,896 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 148 findAll - Exit with(Returned found flights.)
+27 Mar 2026 11:41:16,896 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 128 findAll - Enter Finding all bookings.
+27 Mar 2026 11:41:16,906 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 154 findAll - Exit with(Returned found bookings.)
+27 Mar 2026 11:44:38,733 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 245 findByUsername - Enter Finding the employee with username= Gigel
+27 Mar 2026 11:44:39,105 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 278 findByUsername - Exit with(Employee with username= Gigel found.)
+27 Mar 2026 11:44:39,186 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 124 findAll - Enter Finding all flights.
+27 Mar 2026 11:44:39,186 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 148 findAll - Exit with(Returned found flights.)
+27 Mar 2026 11:44:39,187 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 128 findAll - Enter Finding all bookings.
+27 Mar 2026 11:44:39,188 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 154 findAll - Exit with(Returned found bookings.)
+27 Mar 2026 11:46:17,487 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 245 findByUsername - Enter Finding the employee with username= Gigel
+27 Mar 2026 11:46:17,840 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 278 findByUsername - Exit with(Employee with username= Gigel found.)
+27 Mar 2026 11:46:17,924 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 124 findAll - Enter Finding all flights.
+27 Mar 2026 11:46:17,928 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 148 findAll - Exit with(Returned found flights.)
+27 Mar 2026 11:46:17,930 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 128 findAll - Enter Finding all bookings.
+27 Mar 2026 11:46:17,932 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 154 findAll - Exit with(Returned found bookings.)
+27 Mar 2026 11:46:42,243 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 35 save - Enter Saving booking: Booking{id=null, flight=Flight{id=1, departureAirport='LEMD', arrivalAirport='EDDF', departureTime=2026-03-28T11:45:18, arrivalTime=2026-03-28T13:45:21, availableSeats=100}, numberOfSeats=3, touristNames=[Andrei, Gigel, Ana]}
+27 Mar 2026 11:46:42,248 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 48 save - Exit with(Saved booking: Booking{id=1, flight=Flight{id=1, departureAirport='LEMD', arrivalAirport='EDDF', departureTime=2026-03-28T11:45:18, arrivalTime=2026-03-28T13:45:21, availableSeats=100}, numberOfSeats=3, touristNames=[Andrei, Gigel, Ana]})
+27 Mar 2026 11:46:42,250 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 160 update - Enter Updating flight: Flight{id=1, departureAirport='LEMD', arrivalAirport='EDDF', departureTime=2026-03-28T11:45:18, arrivalTime=2026-03-28T13:45:21, availableSeats=97}
+27 Mar 2026 11:46:42,254 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 184 update - Exit with(Updated flight: Flight{id=1, departureAirport='LEMD', arrivalAirport='EDDF', departureTime=2026-03-28T11:45:18, arrivalTime=2026-03-28T13:45:21, availableSeats=97})
+27 Mar 2026 11:46:43,220 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 124 findAll - Enter Finding all flights.
+27 Mar 2026 11:46:43,223 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 148 findAll - Exit with(Returned found flights.)
+27 Mar 2026 11:46:43,223 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 128 findAll - Enter Finding all bookings.
+27 Mar 2026 11:46:43,226 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 154 findAll - Exit with(Returned found bookings.)
+27 Mar 2026 11:55:34,616 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 245 findByUsername - Enter Finding the employee with username= Gigel
+27 Mar 2026 11:55:35,043 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 278 findByUsername - Exit with(Employee with username= Gigel found.)
+27 Mar 2026 11:55:35,127 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 124 findAll - Enter Finding all flights.
+27 Mar 2026 11:55:35,130 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 148 findAll - Exit with(Returned found flights.)
+27 Mar 2026 11:55:35,132 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 128 findAll - Enter Finding all bookings.
+27 Mar 2026 11:55:35,133 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 154 findAll - Exit with(Returned found bookings.)
+27 Mar 2026 11:56:04,903 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 166 update - Enter Updating booking: Booking{id=1, flight=Flight{id=1, departureAirport='LEMD', arrivalAirport='EDDF', departureTime=2026-03-28T11:45:18, arrivalTime=2026-03-28T13:45:21, availableSeats=97}, numberOfSeats=3, touristNames=[Andrei, Roli, Ana]}
+27 Mar 2026 11:56:04,909 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 187 update - Exit with(Updated booking: Booking{id=1, flight=Flight{id=1, departureAirport='LEMD', arrivalAirport='EDDF', departureTime=2026-03-28T11:45:18, arrivalTime=2026-03-28T13:45:21, availableSeats=97}, numberOfSeats=3, touristNames=[Andrei, Roli, Ana]})
+27 Mar 2026 11:56:06,239 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 124 findAll - Enter Finding all flights.
+27 Mar 2026 11:56:06,241 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 148 findAll - Exit with(Returned found flights.)
+27 Mar 2026 11:56:06,242 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 128 findAll - Enter Finding all bookings.
+27 Mar 2026 11:56:06,244 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 154 findAll - Exit with(Returned found bookings.)
+27 Mar 2026 11:56:53,152 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 245 findByUsername - Enter Finding the employee with username= Gigel
+27 Mar 2026 11:56:53,518 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.EmployeeJdbcRepository 278 findByUsername - Exit with(Employee with username= Gigel found.)
+27 Mar 2026 11:56:53,597 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 124 findAll - Enter Finding all flights.
+27 Mar 2026 11:56:53,601 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.FlightJdbcRepository 148 findAll - Exit with(Returned found flights.)
+27 Mar 2026 11:56:53,602 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 128 findAll - Enter Finding all bookings.
+27 Mar 2026 11:56:53,603 [JavaFX Application Thread] com.org.FlightBookingSystem.repository.jdbc.BookingJdbcRepository 154 findAll - Exit with(Returned found bookings.)

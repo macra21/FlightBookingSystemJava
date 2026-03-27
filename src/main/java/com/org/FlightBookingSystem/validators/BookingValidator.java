@@ -3,7 +3,7 @@ package com.org.FlightBookingSystem.validators;
 import com.org.FlightBookingSystem.domain.Booking;
 import com.org.FlightBookingSystem.exceptions.ValidationException;
 
-public class BookingValidator implements IValidator<Booking> {
+public class BookingValidator{
     public static void validate(Booking booking) {
         StringBuilder errors = new StringBuilder();
 
