@@ -232,26 +232,24 @@ public class EmployeeJdbcRepository implements IEmployeeRepository {
     }
 
     /**
-     * Finds an {@link Employee} based on their username and password
+     * Finds an {@link Employee} based on their username
      * <p>
      *     This is used in the AuthentificationService for login.
      * </p>
      * @param username the account username
-     * @param password the account password
      * @return the {@link Employee} if credentials match, or null otherwise
      * @throws RepositoryException if a database error occurs
      */
     @Override
-    public Employee findByUsernameAndPassword(String username, String password) {
+    public Employee findByUsername(String username) {
         logger.traceEntry("Finding the employee with username= " + username);
         Connection connection = null;
         Employee employee = null;
         try{
             connection = DBConnectionManager.getConnection();
-            String sql = "SELECT * FROM employees WHERE username = ? AND password = ?";
+            String sql = "SELECT * FROM employees WHERE username = ?";
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)){
                 preparedStatement.setString(1, username);
-                preparedStatement.setString(2, password);
                 try (ResultSet resultSet = preparedStatement.executeQuery()){
                     if (resultSet.next()){
                         employee = new Employee(
