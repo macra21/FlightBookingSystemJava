@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" spacing="10.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.org.FlightBookingSystem.controller.LoginController">
+    <Label text="Login"/>
+
+    <TextField fx:id="usernameField" promptText="Username" maxWidth="200"/>
+    <PasswordField fx:id="passwordField" promptText="Password" maxWidth="200"/>
+
+    <HBox spacing="10" alignment="CENTER">
+        <Button text="Login" onAction="#handleLogin" />
+    </HBox>
+    <Label fx:id="errorLabel" textFill="RED" />
+</VBox>

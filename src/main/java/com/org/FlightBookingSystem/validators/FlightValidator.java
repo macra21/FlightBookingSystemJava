@@ -4,7 +4,7 @@ package com.org.FlightBookingSystem.validators;
 import com.org.FlightBookingSystem.domain.Flight;
 import com.org.FlightBookingSystem.exceptions.ValidationException;
 
-public class FlightValidator implements IValidator<Flight> {
+public class FlightValidator {
     public static void validate(Flight flight){
         StringBuilder errors = new StringBuilder();
         if (flight.getId() != null && flight.getId() < 0){

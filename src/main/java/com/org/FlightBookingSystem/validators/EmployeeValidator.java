@@ -3,7 +3,7 @@ package com.org.FlightBookingSystem.validators;
 import com.org.FlightBookingSystem.domain.Employee;
 import com.org.FlightBookingSystem.exceptions.ValidationException;
 
-public class EmployeeValidator implements IValidator<Employee>{
+public class EmployeeValidator{
     public static void validate(Employee employee){
         StringBuilder errors = new StringBuilder();
         if (employee.getId() != null && employee.getId() < 0){
